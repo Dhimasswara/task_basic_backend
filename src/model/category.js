@@ -1,7 +1,7 @@
 const Pool = require('../config/db');
 
 const selectAllCategory = () =>{
-    return Pool.query(`SELECT * FROM category`);
+    return Pool.query(`SELECT * FROM category WHERE name LIKE '%${searchParam}%' ORDER BY ${sortBY} ${sort} LIMIT ${limit} OFFSET ${offset} `);
 }
 
 const selectCategory = (id) =>{

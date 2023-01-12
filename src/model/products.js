@@ -9,13 +9,13 @@ const selectProduct = (id) =>{
 }
 
 const insertProduct = (data) =>{
-    const { id,name,price,deskripsi,stock,rating,size,id_category,id_seller} = data;
-    return Pool.query(`INSERT INTO product(id_product,name,price,deskripsi,stock,rating,size,id_category,id_seller) VALUES(${id},'${name}',${price},'${deskripsi}',${stock},${rating},'${size}',${id_category},${id_seller})`);
+    const { id,name,price,description,stock,rating,size,id_category,id_seller} = data;
+    return Pool.query(`INSERT INTO product(id_product,name,price,description,stock,rating,size,id_category,id_seller) VALUES(${id},'${name}',${price},'${description}',${stock},${rating},'${size}',${id_category},${id_seller})`);
 }
 
 const updateProduct = (data) =>{
-    const { id,name,price,deskripsi,stock,rating,size, id_category,id_seller} = data;
-    return Pool.query(`UPDATE product SET name='${name}', price=${price}, deskripsi='${deskripsi}',stock=${stock},rating=${rating},size='${size}', id_category=${id_category}, id_seller=${id_seller} WHERE id_product=${id}`);
+    const { id,name,price,description,stock,rating,size, id_category,id_seller} = data;
+    return Pool.query(`UPDATE product SET name='${name}', price=${price}, description='${description}',stock=${stock},rating=${rating},size='${size}', id_category=${id_category}, id_seller=${id_seller} WHERE id_product=${id}`);
 }
 
 const deleteProduct = (id) =>{

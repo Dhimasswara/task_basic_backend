@@ -16,7 +16,7 @@ const {
         const page = Number(req.query.page) || 1;
         const limit = Number(req.query.limit) || 5;
         const offset = (page - 1) * limit;
-        let sortBY = req.query.sortBY || "name";
+        let sortBY = req.query.sortBY || "id_product";
         let sort = req.query.sort || 'ASC';
         let searchParam = req.query.search || "";
         const result = await selectAllProduct(limit, offset, searchParam,sortBY,sort);
@@ -49,7 +49,7 @@ const {
 
 
     createProduct: async (req, res) => {
-      const { name, price, deskripsi, stock, rating,size, id_category, id_seller} = req.body;
+      const { name, price, description, stock, rating,size, id_category, id_seller} = req.body;
       const {
         rows: [count],
       } = await countData();
@@ -58,7 +58,7 @@ const {
         id,
         name,
         price,
-        deskripsi,
+        description,
         stock,
         rating,
         size,
@@ -76,16 +76,16 @@ const {
     updateProduct: async (req, res) => {
       try {
         const id = Number(req.params.id);
-        const {name, price, deskripsi, stock, rating , size, id_category, id_seller} = req.body;
+        const {name, price, description, stock, rating , size, id_category, id_seller} = req.body;
         const { rowCount } = await findId(id);
         if (!rowCount) {
-          res.json({message: "ID is Not Found"})
+         return res.json({message: "ID is Not Found"})
         }
         const data = {
           id,
           name,
           price,
-          deskripsi,
+          description,
           stock,
           rating,
           size,
@@ -108,7 +108,7 @@ const {
         const id = Number(req.params.id);
         const { rowCount } = await findId(id);
         if (!rowCount) {
-          res.json({message: "ID is Not Found"})
+          return res.json({message: "ID is Not Found"})
         }
         deleteProduct(id)
           .then((result) =>

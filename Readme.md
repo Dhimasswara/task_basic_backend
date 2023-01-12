@@ -9,6 +9,8 @@
 | [CORS] | npm i cors |
 | [Eslint] | npm i eslint |
 | [Http-errors] | npm i http-errors |
+| [helmet] | npm i helmet |
+| [dotenv] | npm i dot env |
 
 
 
@@ -21,6 +23,8 @@
 [CORS]: <https://www.npmjs.com/package/cors>
 [Eslint]: <https://eslint.org>
 [Http-errors]: <https://www.npmjs.com/package/http-errors>
+[helmet] : <https://helmetjs.github.io/>
+[dotenv] : <https://www.npmjs.com/package/dotenv>
 
 
 

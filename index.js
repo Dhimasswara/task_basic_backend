@@ -29,5 +29,8 @@ app.use((err,req,res,next)=>{
 
 })
 app.listen(port, () => {
-  console.log(`http://localhost:${port}`)
+  console.log(`http://localhost:${port}/products`)
+  console.log(`http://localhost:${port}/seller`)
+  console.log(`http://localhost:${port}/customer`)
+  console.log(`http://localhost:${port}/category`)
 })
