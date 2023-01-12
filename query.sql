@@ -67,3 +67,4 @@ create table product (
 
 insert into product (id_product, name, price, deskripsi, stock, rating, color, size, id_category, id_seller) values (2, 'Macbook Air 2022', 2000000, 'Dolar', 10, 5, 'Grey',1,(select id_category from category where id_category = 1),(select id_seller from seller where id_seller = 1));
 
+select product.* , category.name from product inner join category ON product.name=category.name;

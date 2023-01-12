@@ -16,7 +16,7 @@ const {
         const page = Number(req.query.page) || 1;
         const limit = Number(req.query.limit) || 5;
         const offset = (page - 1) * limit;
-        let sortBY = req.query.sortBY || "id_product";
+        let sortBY = req.query.sortBY || "id_customer";
         let sort = req.query.sort || 'ASC';
         let searchParam = req.query.search || "";
         const result = await selectAllCustomer(limit, offset, searchParam,sortBY,sort);

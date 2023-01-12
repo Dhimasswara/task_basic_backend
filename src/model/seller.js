@@ -1,7 +1,7 @@
 const Pool = require('../config/db');
 
-const selectAllSeller = () =>{
-    return Pool.query(`SELECT * FROM seller`);
+const selectAllSeller = (limit, offset, searchParam,sortBY,sort) =>{
+  return Pool.query(`SELECT * FROM seller WHERE name LIKE '%${searchParam}%' ORDER BY ${sortBY} ${sort} LIMIT ${limit} OFFSET ${offset} `);
 }
 
 const selectSeller = (id) =>{

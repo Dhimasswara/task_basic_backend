@@ -16,7 +16,7 @@ const {
         const page = Number(req.query.page) || 1;
         const limit = Number(req.query.limit) || 5;
         const offset = (page - 1) * limit;
-        let sortBY = req.query.sortBY || "id_product";
+        let sortBY = req.query.sortBY || "id_category";
         let sort = req.query.sort || 'ASC';
         let searchParam = req.query.search || "";
         const result = await selectAllCategory(limit, offset, searchParam,sortBY,sort);
@@ -69,7 +69,7 @@ const {
     updateCategory: async (req, res) => {
       try {
         const id = Number(req.params.id);
-        const {name, price, deskripsi, stock, rating , size} = req.body;
+        const {name} = req.body;
         const { rowCount } = await findId(id);
         if (!rowCount) {
           return res.json({message: "ID is Not Found"})
@@ -77,11 +77,6 @@ const {
         const data = {
           id,
           name,
-          price,
-          deskripsi,
-          stock,
-          rating,
-          size,
         };
         updateCategory(data)
           .then((result) =>
