@@ -1,9 +1,20 @@
 /* eslint-disable no-undef */
-const validate = (req, res, next) => {
+const validateProducts = (req, res, next) => {
     const { name, stock, price } = req.body
     try {
       if (name === '' || stock === '' || price === '') throw new Error('kosong')
       if (isNaN(stock) || isNaN(price)) throw new Error('input bukan angka')
+      if (!isNaN(name)) throw new Error('input bukan text')
+    } catch (error) {
+      return res.send(`${error}`)
+    }
+    next()
+  }
+
+  const validateCustomers = (req, res, next) => {
+    const { name, email } = req.body
+    try {
+      if (name === '' || email === '') throw new Error('kosong')
       if (!isNaN(name)) throw new Error('input bukan text')
     } catch (error) {
       return res.send(`${error}`)
@@ -17,5 +28,8 @@ const validate = (req, res, next) => {
     response.setHeader('Access-Control-Headers', 'Content-Type');
     next();
   }
+
+
   
-  module.exports = {validate,myCors}
+  
+  module.exports = {validateProducts, validateCustomers, myCors}
