@@ -10,12 +10,12 @@ const selectSeller = (id) =>{
 
 const insertSeller = (data) =>{
     const { id,name,phone,password,email,gender,dob} = data;
-    return Pool.query(`INSERT INTO Seller(id_seller,name,phone,password,email,gender,dob) VALUES(${id},'${name}','${phone}','${password}','${email}','${gender}','${dob}')`);
+    return Pool.query(`INSERT INTO Seller(id_seller,names_seller,phone,password,email,gender,dob) VALUES(${id},'${name}','${phone}','${password}','${email}','${gender}','${dob}')`);
 }
 
 const updateSeller = (data) =>{
     const { id,name,phone,password,email,gender,dob} = data;
-    return Pool.query(`UPDATE Seller SET name='${name}', phone='${phone}', password='${password}', email='${email}',gender='${gender}',dob='${dob}' WHERE id_seller=${id}`);
+    return Pool.query(`UPDATE Seller SET names_seller='${name}', phone='${phone}', password='${password}', email='${email}',gender='${gender}',dob='${dob}' WHERE id_seller=${id}`);
 }
 
 const deleteSeller = (id) =>{
