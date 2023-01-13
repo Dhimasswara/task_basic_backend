@@ -12,4 +12,4 @@ router.use('/category', CategoryRouter)
 router.use('/seller', SellerRouter)
 router.use('/customer', CustomerRouter)
 
-module.exports = router
+module.exports = router;

@@ -29,7 +29,4 @@ const validateProducts = (req, res, next) => {
     next();
   }
 
-
-  
-  
   module.exports = {validateProducts, validateCustomers, myCors}
