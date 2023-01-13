@@ -16,7 +16,7 @@ const {
         const page = Number(req.query.page) || 1;
         const limit = Number(req.query.limit) || 5;
         const offset = (page - 1) * limit;
-        let sortBY = req.query.sortBY || "id_customer";
+        let sortBY = req.query.sortBY || "names";
         let sort = req.query.sort || 'ASC';
         let searchParam = req.query.search || "";
         const result = await selectAllCustomer(limit, offset, searchParam,sortBY,sort);
@@ -40,6 +40,10 @@ const {
 
     getDetailCustomer: async (req, res) => {
       const id = Number(req.params.id);
+      const { rowCount } = await findId(id);
+        if (!rowCount) {
+          return res.json({message: "ID is Not Found"})
+        }
       selectCustomer(id)
         .then((result) => {
           commonHelper.response(res, result.rows, 200, "get data success");

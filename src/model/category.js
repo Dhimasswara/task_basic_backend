@@ -1,7 +1,7 @@
 const Pool = require('../config/db');
 
 const selectAllCategory = (limit, offset, searchParam,sortBY,sort) =>{
-    return Pool.query(`SELECT * FROM category WHERE names_category LIKE '%${searchParam}%' ORDER BY ${sortBY} ${sort} LIMIT ${limit} OFFSET ${offset} `);
+    return Pool.query(`SELECT * FROM category WHERE name_category LIKE '%${searchParam}%' ORDER BY ${sortBY} ${sort} LIMIT ${limit} OFFSET ${offset} `);
 }
 
 const selectCategory = (id) =>{
@@ -10,12 +10,12 @@ const selectCategory = (id) =>{
 
 const insertCategory = (data) =>{
     const { id,name} = data;
-    return Pool.query(`INSERT INTO Category(id_category,names_category) VALUES(${id},'${name}')`);
+    return Pool.query(`INSERT INTO Category(id_category,name_category) VALUES(${id},'${name}')`);
 }
 
 const updateCategory = (data) =>{
     const { id,name} = data;
-    return Pool.query(`UPDATE category SET names_category='${name}' WHERE id_category=${id}`);
+    return Pool.query(`UPDATE category SET name_category='${name}' WHERE id_category=${id}`);
 }
 
 const deleteCategory = (id) =>{
