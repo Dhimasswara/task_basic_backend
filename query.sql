@@ -5,17 +5,15 @@
 create type jk as enum ('male','female');
 
 Create table customer (
-    id_customer int not null primary key,
-    name varchar(255) not null,
-    phone varchar(25) not null,
-    password varchar(255) not null,
-    email varchar(255) not null,
+    id_customer varchar(255) not null primary key,
+    fullname varchar(255) not null,
     gender jk not null,
-    dob date
+    phone varchar(25) not null,
+    email varchar(255) not null,
+    password varchar(255) not null,
+    dob date,
+    role varchar not null
 );
-
-insert into customer (id_customer, name, phone, password, email, gender, dob) values (1, 'Dhimas', '085832095871','satusatu','dhimasswara08@gmail.com','male','2001-01-08');
-insert into customer (id_customer, name, phone, password, email, gender, dob) values (2, 'Sterling', '085832095123','satudua','sterling@gmail.com','male','2010-10-18');
 
 
 -- ----------------------------------------
@@ -23,17 +21,16 @@ insert into customer (id_customer, name, phone, password, email, gender, dob) va
 -- ----------------------------------------
 
 create table seller (
-    id_seller int not null primary key,
-    name varchar(255) not null,
-    phone varchar(25) not null,
-    password varchar(255) not null,
-    email varchar(255) not null,
+    id_seller varchar(255) not null primary key,
+    fullname varchar(255) not null,
     gender jk not null,
-    dob date
+    phone varchar(25) not null,
+    email varchar(255) not null,
+    password varchar(255) not null,
+    dob date,
+    role varchar not null
 );
 
-insert into seller (id_seller, name, phone, password, email, gender, dob) values (1, 'Jhony','08228899001', 'satudua','jhony@gmail.com','male','1995-01-08');
-insert into seller (id_seller, name, phone, password, email, gender, dob) values (2, 'Hanson','08228822001', 'satusatu','handson@gmail.com','male','2005-02-18');
 
 -- -----------------------------------------
 -- -- TABLE CATEGORY -- 
@@ -44,27 +41,21 @@ create table category (
     name_category varchar(255) not null
 )
 
-insert into category ( id_category, name_category ) values (1, 'Laptop');
-
 -- -----------------------------------------
 -- -- TABLE PRODUCT --
 -- -----------------------------------------
 
 create table product (
-    id_product int not null primary key,
+    id_products varchar primary key,
     name varchar(255) not null,
-    price int not null,
-    deskripsi varchar(255) not null,
     stock int not null,
-    rating int,
-    color varchar(255) not null,
-    size int,
+    price int not null,
+    photo varchar(255) not null,
+    description varchar(255) not null,
     id_category int,
-    id_seller int,
-    CONSTRAINT fk_category FOREIGN KEY (id_category) REFERENCES category(id_category),
-    CONSTRAINT fk_seller FOREIGN KEY (id_seller) REFERENCES seller(id_seller)
+    CONSTRAINT fk_category FOREIGN KEY (id_category) REFERENCES category(id_category)
 );
 
-insert into product (id_product, name, price, deskripsi, stock, rating, size, id_category, id_seller) values (2, 'Macbook Air 2022', 2000000, 'Dolar', 10, 5,1,(select id_category from category where id_category = 1),(select id_seller from seller where id_seller = 1));
 
 select product.* , category.name from product inner join category ON product.name=category.name;
+select products.*, category.names_category, seller.names_seller from ((products inner join category using (id_category)) inner join seller using (id_seller)) WHERE product.name LIKE '%${searchParam}%' ORDER BY ${sortBY} ${sort} LIMIT ${limit} OFFSET ${offset}

@@ -1,4 +1,4 @@
-const {
+  const {
     selectAllProduct,
     selectProduct,
     insertProduct,
@@ -7,8 +7,9 @@ const {
     countData,
     findId,
   } = require("../model/products");
+
+  const { v4: uuidv4 } = require('uuid');
   const commonHelper = require("../helper/common");
-  
   const productController = {
 
     getAllProduct: async(req, res) => {
@@ -39,7 +40,11 @@ const {
 
 
     getDetailProduct: async (req, res) => {
-      const id = Number(req.params.id);
+      const id = req.params.id;
+      const { rowCount } = await findId(id);
+        if (!rowCount) {
+          return res.json({message: "ID is Not Found"})
+        }
       selectProduct(id)
         .then((result) => {
           commonHelper.response(res, result.rows, 200, "get data success");
@@ -48,76 +53,91 @@ const {
     },
 
 
+
     createProduct: async (req, res) => {
-      const { name, price, description, stock, rating,size, id_category, id_seller} = req.body;
-      const {
-        rows: [count],
-      } = await countData();
-      const id = Number(count.count) + 1;
+      const photo = req.file.filename;
+      const PORT = process.env.PORT || 5000;
+      const HOST = process.env.HOST || 'localhost';
+      const role = req.payload.role;
+  
+      if (role !== 'seller') return res.json({ message: `Permission Denied, You're not Seller` });
+      const { name,stock,price,description,id_category} = req.body;
+      const id = uuidv4();
+
       const data = {
         id,
         name,
-        price,
-        description,
         stock,
-        rating,
-        size,
-        id_category,
-        id_seller,
+        price,
+        photo: `http://${HOST}:${PORT}/img/${photo}`,
+        description,
+        id_category
       };
+  
       insertProduct(data)
-        .then((result) =>
-          commonHelper.response(res, result.rows, 201, "Product created")
-        )
-        .catch((err) => res.send(err));
+      .then((result) => {
+        commonHelper.response(res, result.rows, 201, 'Data Product Created!');
+      })
+      .catch((error) => {
+        res.send(error);
+      });
     },
 
 
     updateProduct: async (req, res) => {
-      try {
-        const id = Number(req.params.id);
-        const {name, price, description, stock, rating , size, id_category, id_seller} = req.body;
-        const { rowCount } = await findId(id);
-        if (!rowCount) {
-         return res.json({message: "ID is Not Found"})
-        }
-        const data = {
+      const id = req.params.id;
+      const photo = req.file.filename;
+      const PORT = process.env.PORT || 5000;
+      const HOST = process.env.HOST || 'localhost';
+  
+      const role = req.payload.role;
+  
+      if (role !== 'seller') return res.json({ message: 'Permission Denied, you are not a seller!' });
+  
+      const { rowCount } = await findId(id);
+  
+      if (!rowCount) return res.json({ message: 'Data Product Not Found!' });
+  
+  
+      const {name,stock,price,description,id_category} = req.body;
+  
+      const data = {
           id,
           name,
-          price,
-          description,
           stock,
-          rating,
-          size,
+          price,
+          photo: `http://${HOST}:${PORT}/img/${photo}`,
+          description,
           id_category,
-          id_seller,
-        };
+      };
+  
         updateProduct(data)
-          .then((result) =>
-            commonHelper.response(res, result.rows, 200, "Product updated")
-          )
-          .catch((err) => res.send(err));
-      } catch (error) {
-        console.log(error);
-      }
+        .then((result) => {
+          commonHelper.response(res, result.rows, 201, 'Data Product Updated!');
+        })
+        .catch((error) => {
+          res.send(error);
+        });
     },
 
 
     deleteProduct: async (req, res) => {
-      try {
-        const id = Number(req.params.id);
-        const { rowCount } = await findId(id);
-        if (!rowCount) {
-          return res.json({message: "ID is Not Found"})
-        }
-        deleteProduct(id)
-          .then((result) =>
-            commonHelper.response(res, result.rows, 200, "Product deleted")
-          )
-          .catch((err) => res.send(err));
-      } catch (error) {
-        console.log(error);
-      }
+      const id = req.params.id;
+      const role = req.payload.role;
+  
+      if (role !== 'seller') return res.json({ message: 'Permission Denied, you are not a seller!' });
+  
+      const { rowCount } = await findId(id);
+      if (!rowCount) return res.json({ message: 'Data Product Not Found' });
+  
+  
+      deleteProduct(id)
+      .then((result) => {
+        commonHelper.response(res, result.rows, 200, 'Product Deleted!');
+      })
+      .catch((error) => {
+        res.send(error);
+      });
     },
   };
   
