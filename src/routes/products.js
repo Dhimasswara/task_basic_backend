@@ -8,7 +8,7 @@ const upload = require('../middleware/Multer');
 
 router.get('/', productController.getAllProduct);
 router.get('/:id', productController.getDetailProduct);
-router.post('/', protect, upload, productController.createProduct);
+router.post('/', protect, upload, validateProducts, productController.createProduct);
 router.put('/:id', protect, upload, productController.updateProduct);
 router.delete('/:id', protect, productController.deleteProduct);
 

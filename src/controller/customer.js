@@ -204,6 +204,9 @@ const customerController = {
 		try {
 			const email = req.payload.email
 			const { rows: [user] } = await findEmail(email);
+      const role = req.payload.role;
+  
+      if (role !== 'customer') return res.json({ message: `Permission Denied, cannot get customer!` });
 
       delete user.id_customer;
 			delete user.password

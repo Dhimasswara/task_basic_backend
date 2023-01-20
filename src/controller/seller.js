@@ -1,7 +1,6 @@
 const {
     selectAllSeller,
     selectSeller,
-    createSeller,
     updateSeller,
     deleteSeller,
     countData,
@@ -26,6 +25,7 @@ const {
         let sort = req.query.sort || 'ASC';
         let searchParam = req.query.search || "";
         const result = await selectAllSeller(limit, offset, searchParam,sortBY,sort);
+        
         const {
           rows: [count],
         } = await countData();
@@ -86,9 +86,9 @@ const {
       }
     },
 
-    updateSeller: async (req, res) => {
+    updatSeller: async (req, res) => {
       const id = req.params.id;
-      const {name,gender,phone,email,password,dob, role} = req.body;
+      const {name,gender,phone,email,password,dob} = req.body;
   
       const { rowCount } = await findId(id);
   
@@ -219,8 +219,12 @@ const {
     profileSeller: async (req, res) => {
       const email = req.payload.email;
       const { rows: [seller] } = await findEmail(email);
+      const role = req.payload.role;
+  
+      if (role !== 'seller') return res.json({ message: `Permission Denied, cannot get seller!` });
   
       delete seller.password;
+      
       commonHelper.response(res, seller, 200);
     }
 

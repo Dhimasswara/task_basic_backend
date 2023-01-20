@@ -76,7 +76,7 @@
   
       insertProduct(data)
       .then((result) => {
-        commonHelper.response(res, result.rows, 201, 'Data Product Created!');
+        commonHelper.response(res, result.rows, 201, 'Product Created!');
       })
       .catch((error) => {
         res.send(error);
@@ -89,14 +89,13 @@
       const photo = req.file.filename;
       const PORT = process.env.PORT || 5000;
       const HOST = process.env.HOST || 'localhost';
-  
       const role = req.payload.role;
   
-      if (role !== 'seller') return res.json({ message: 'Permission Denied, you are not a seller!' });
+      if (role !== 'seller') return res.json({ message: `Permission Denied, you're not a seller!` });
   
       const { rowCount } = await findId(id);
   
-      if (!rowCount) return res.json({ message: 'Data Product Not Found!' });
+      if (!rowCount) return res.json({ message: 'Product Not Found!' });
   
   
       const {name,stock,price,description,id_category} = req.body;
@@ -113,7 +112,7 @@
   
         updateProduct(data)
         .then((result) => {
-          commonHelper.response(res, result.rows, 201, 'Data Product Updated!');
+          commonHelper.response(res, result.rows, 201, 'Product Updated!');
         })
         .catch((error) => {
           res.send(error);
@@ -128,7 +127,7 @@
       if (role !== 'seller') return res.json({ message: 'Permission Denied, you are not a seller!' });
   
       const { rowCount } = await findId(id);
-      if (!rowCount) return res.json({ message: 'Data Product Not Found' });
+      if (!rowCount) return res.json({ message: 'Product Not Found' });
   
   
       deleteProduct(id)

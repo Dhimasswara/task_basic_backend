@@ -13,8 +13,8 @@ router.delete("/:id", sellerController.deleteSeller);
 
 router.post('/serv/register', sellerController.registerSeller);
 router.post('/serv/login', sellerController.loginSeller);
-router.post('/serv/refresh-token', sellerController.refreshToken);
-router.get('/serv/profile-seller', protect, sellerController.profileSeller);
+router.post('/serv/refreshtoken', sellerController.refreshToken);
+router.get('/serv/profile', protect, sellerController.profileSeller);
 
 
 module.exports = router;
